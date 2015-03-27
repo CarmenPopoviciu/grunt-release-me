@@ -29,19 +29,19 @@ module.exports = function (grunt) {
 
             if (typeof configuration.wd === 'undefined') {
                 configuration.wd = defaults.wd;
-                grunt.verbose.writeln(('No working directory has been defined, using default fallback [' + defaults.wd + ']').bold);
+                grunt.log.writeln(('No working directory has been defined, using default fallback [' + defaults.wd + ']').bold);
             }
 
             var newVersion = git.utils.newVersion(configuration.cwd, configuration.buildNumber);
             async.series({
                     // #1
                     clone: function (callback) {
-                        grunt.verbose.writeln('Cloning repository ['+ configuration.repository + '] to working directory [' + configuration.wd + ']');
+                        grunt.log.writeln('Cloning repository ['+ configuration.repository + '] to working directory [' + configuration.wd + ']');
                         git.commands.clone(configuration.repository, configuration.wd, callback);
                     },
                     // #2
                     copy: function (callback) {
-                        grunt.verbose.writeln('Copying files to working directory [' + configuration.wd + ']');
+                        grunt.log.writeln('Copying files to working directory [' + configuration.wd + ']');
                         var globs = [];
                         if (configuration.files instanceof Array) {
                             configuration.files.forEach(function (f) {
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
                     },
                     // #3
                     updateBowerJsonWithNewVersion: function (callback) {
-                        grunt.verbose.writeln('Updating bower.json with new version [' + newVersion + ']');
+                        grunt.log.writeln('Updating bower.json with new version [' + newVersion + ']');
                         var bowerJsonPath = path.resolve(configuration.cwd + '/bower.json');
                         if (grunt.file.exists(bowerJsonPath)) {
                             bowerJSON = grunt.file.readJSON(bowerJsonPath);
@@ -87,27 +87,27 @@ module.exports = function (grunt) {
                     },
                     // #4
                     addAll: function (callback) {
-                        grunt.verbose.writeln('Adding all files');
+                        grunt.log.writeln('Adding all files');
                         git.commands.addAll(configuration.wd, callback);
                     },
                     // #5
                     commit: function (callback) {
-                        grunt.verbose.writeln('Committing all added changes');
+                        grunt.log.writeln('Committing all added changes');
                         git.commands.commit(configuration.wd, 'v' + newVersion, callback);
                     },
                     // #6
                     tag: function (callback) {
-                        grunt.verbose.writeln('Creating tag [v' + newVersion + ']');
+                        grunt.log.writeln('Creating tag [v' + newVersion + ']');
                         git.commands.tag(configuration.wd, 'v' + newVersion, callback);
                     },
                     // #7
                     pushMaster: function (callback) {
-                        grunt.verbose.writeln('Pushing changes to branch [master]');
+                        grunt.log.writeln('Pushing changes to branch [master]');
                         git.commands.push(configuration.wd, 'master', callback);
                     },
                     // #8
                     pushTag: function (callback) {
-                        grunt.verbose.writeln('Pushing changes to branch [v' + newVersion + ']');
+                        grunt.log.writeln('Pushing changes to branch [v' + newVersion + ']');
                         git.commands.push(configuration.wd, 'v' + newVersion, callback);
                     }
                 },

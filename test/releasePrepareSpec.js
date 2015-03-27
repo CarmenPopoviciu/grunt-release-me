@@ -15,7 +15,7 @@ describe('ReleaseMe', function () {
         spyOn(grunt.util, 'spawn').andCallFake(function (options, callback) {
             callback(null);
         });
-        spyOn(grunt.verbose, 'writeln');
+        spyOn(grunt.log, 'writeln');
 
         release = require('./../tasks/release.js')(grunt)
     })
@@ -63,15 +63,15 @@ describe('ReleaseMe', function () {
             main: './some_repo_code.js',
             cwd: './source_repo'
         }, function () {
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.release]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Copying files to working directory [.release]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Adding all files');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Committing all added changes');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.release]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Copying files to working directory [.release]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Adding all files');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Committing all added changes');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
             expect(grunt.file.readJSON('./expects/bower.json')).toEqual(grunt.file.readJSON('.release/bower.json'));
         });
     });
@@ -84,15 +84,15 @@ describe('ReleaseMe', function () {
             main: './some_repo_code.js',
             cwd: './source_repo'
         }, function () {
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.release]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Copying files to working directory [.release]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Adding all files');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Committing all added changes');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.release]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Copying files to working directory [.release]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Adding all files');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Committing all added changes');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
             expect(grunt.file.readJSON('./expects/bower.json')).toEqual(grunt.file.readJSON('.release/bower.json'));
         });
     });
@@ -106,15 +106,15 @@ describe('ReleaseMe', function () {
             cwd: './source_repo',
             wd: '.tmp/withWorkingDirWithoutFiles'
         }, function () {
-            expect(grunt.verbose.writeln).not.toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.tmp/withWorkingDirWithoutFiles]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Copying files to working directory [.tmp/withWorkingDirWithoutFiles]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Adding all files');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Committing all added changes');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).not.toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.tmp/withWorkingDirWithoutFiles]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Copying files to working directory [.tmp/withWorkingDirWithoutFiles]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Adding all files');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Committing all added changes');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
             expect(grunt.file.readJSON('./expects/bower.json')).toEqual(grunt.file.readJSON('.tmp/withWorkingDirWithoutFiles/bower.json'));
             expect(grunt.file.exists('./.tmp/withWorkingDirWithoutFiles/some_repo_code.js')).toBeFalsy();
             expect(grunt.file.exists('./.tmp/withWorkingDirWithoutFiles/subfolder/some_subfolder_code.js')).toBeFalsy();
@@ -136,15 +136,15 @@ describe('ReleaseMe', function () {
             }
 
         }, function () {
-            expect(grunt.verbose.writeln).not.toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Copying files to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Adding all files');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Committing all added changes');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).not.toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Copying files to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Adding all files');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Committing all added changes');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
             expect(grunt.file.readJSON('./expects/bower.json')).toEqual(grunt.file.readJSON('.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject/bower.json'));
             expect(grunt.file.exists('./.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject/some_repo_code.js')).toBeTruthy();
             expect(grunt.file.exists('./.tmp/withWorkingDirWithFilesSpecifiedAsSingleObject/subfolder/some_subfolder_code.js')).toBeTruthy();
@@ -172,15 +172,15 @@ describe('ReleaseMe', function () {
             ]
 
         }, function () {
-            expect(grunt.verbose.writeln).not.toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Copying files to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Adding all files');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Committing all added changes');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
-            expect(grunt.verbose.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).not.toHaveBeenCalledWith(('No working directory has been defined, using default fallback [.release]').bold);
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Cloning repository [repo.git] to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Copying files to working directory [.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Updating bower.json with new version [0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Adding all files');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Committing all added changes');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Creating tag [v0.1.1-build.' + buildNumber + '+sha.6283298]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [master]');
+            expect(grunt.log.writeln).toHaveBeenCalledWith('Pushing changes to branch [v0.1.1-build.' + buildNumber + '+sha.6283298]');
             expect(grunt.file.readJSON('./expects/bower.json')).toEqual(grunt.file.readJSON('.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray/bower.json'));
             expect(grunt.file.exists('./.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray/some_repo_code.js')).toBeTruthy();
             expect(grunt.file.exists('./.tmp/withWorkingDirWithFilesSpecifiedAsObjectArray/subfolder/some_subfolder_code.js')).toBeTruthy();
